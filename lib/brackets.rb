@@ -19,34 +19,30 @@ module Brackets
   private
 
   def consume_char(char, stack)
-    if left_bracket?(char)
-      consume_left_bracket(char, stack)
-    elsif right_bracket?(char)
-      consume_right_bracket(char, stack)
+    if left?(char)
+      stack.push(char)
+    elsif right?(char)
+      pop_if_valid(char, stack)
     end
   end
 
-  def consume_left_bracket(char, stack)
-    stack.push(char)
+  def left?(char)
+    LEFTS.include?(char)
   end
 
-  def consume_right_bracket(char, stack)
-    if valid_right_bracket?(char, stack)
+  def right?(char)
+    RIGHTS.include?(char)
+  end
+
+  def pop_if_valid(char, stack)
+    if valid_right?(char, stack)
       stack.pop
     else
       raise BracketsMismatchError
     end
   end
 
-  def left_bracket?(char)
-    LEFTS.include?(char)
-  end
-
-  def right_bracket?(char)
-    RIGHTS.include?(char)
-  end
-
-  def valid_right_bracket?(char, stack)
+  def valid_right?(char, stack)
     char == PAIRS[stack.last]
   end
 

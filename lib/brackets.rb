@@ -3,7 +3,8 @@ module Brackets
 
   LEFTS  = ['(', '[', '{']
   RIGHTS = [')', ']', '}']
-  PAIRS  = Hash[LEFTS.zip(RIGHTS)]
+
+  PAIRS = Hash[LEFTS.zip(RIGHTS)]
 
   def balanced?(str, stack = [])
     return stack.empty? if str.empty?
